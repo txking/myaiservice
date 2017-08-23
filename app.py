@@ -45,23 +45,22 @@ def makeWebhookResult(req):
         # "contextOut": [],
         "source": "apiai-onlinestore-shipping"
         }
-    else:
-        if req.get("result").get("action") == "zoho.getloaninfo":
-	    result = req.get("result")
-            parameters = result.get("parameters")
-            loanno = parameters.get("LoanNo")    
-	    zohourl = "https://creator.zoho.com/api/xml/loaninfo/view/values_Report?authtoken=e22a32c53525cdf5af604978a70a5c4a&zc_ownername=grajesh2000&criteria=(LoanNo%20%3D%3D%20" + loanno + ")"
-	    speech = urllib.request.urlopen(zohourl).read()
-            print("Response:")
-            print(speech)
-            return {
-            "speech": speech,
-            "displayText": speech,
-            #"data": {},
-            # "contextOut": [],
-            "source": "zoho-creator-loaninfo"
+    elif req.get("result").get("action") == "zoho.getloaninfo":
+        result = req.get("result")
+        parameters = result.get("parameters")
+        loanno = parameters.get("LoanNo")    
+        zohourl = "https://creator.zoho.com/api/xml/loaninfo/view/values_Report?authtoken=e22a32c53525cdf5af604978a70a5c4a&zc_ownername=grajesh2000&criteria=(LoanNo%20%3D%3D%20" + loanno + ")"
+        speech = urllib.request.urlopen(zohourl).read()
+        print("Response:")
+        print(speech)
+        return {
+        "speech": speech,
+        "displayText": speech,
+        #"data": {},
+        # "contextOut": [],
+        "source": "zoho-creator-loaninfo"
         }	
-	else:
+    else:
         return {}
 	
 
