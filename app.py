@@ -56,7 +56,8 @@ def makeWebhookResult(req):
         sres = urllib.request.urlopen(zohourl).read()
         sstr = sres.decode("utf-8")
         sstr  = sstr[28:-1]
-        speech = json.dumps(sstr, indent=4, sort_keys=True)
+        # speech = json.dumps(sstr, indent=4, sort_keys=True)
+        speech = sstr
         print("Response:")
         print(speech)
         return {
