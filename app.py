@@ -51,11 +51,11 @@ def makeWebhookResult(req):
         result = req.get("result")
         parameters = result.get("parameters")
         loanno = parameters.get("LoanNo")    
-        zohourl = "https://creator.zoho.com/api/json/loaninfo/view/values_Report?authtoken=e22a32c53525cdf5af604978a70a5c4a&zc_ownername=grajesh2000&criteria=(LoanNo%20%3D%3D%20" + loanno + ")"
+        zohourl = "https://creator.zoho.com/api/xml/loaninfo/view/values_Report?authtoken=e22a32c53525cdf5af604978a70a5c4a&zc_ownername=grajesh2000&criteria=(LoanNo%20%3D%3D%20" + loanno + ")"
         print ('LoanNo is {0}, and URL is {1}'.format(loanno, zohourl))
         sres = urllib.request.urlopen(zohourl).read()
         sstr = sres.decode("utf-8")
-        sstr  = sstr[28:-1]
+        # sstr  = sstr[28:-1]
         # speech = json.dumps(sstr, indent=4, sort_keys=True)
         speech = sstr
         print("Response:")
