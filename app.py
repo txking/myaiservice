@@ -29,13 +29,6 @@ def webhook():
     r.headers['Content-Type'] = 'application/json'
     return r
 
-def pp_json(json_thing, sort=True, indents=4):
-    if type(json_thing) is str:
-        print(json.dumps(json.loads(json_thing), sort_keys=sort, indent=indents))
-    else:
-        print(json.dumps(json_thing, sort_keys=sort, indent=indents))
-    return None
-    
     
 def makeWebhookResult(req):
     if req.get("result").get("action") == "shipping.cost":
@@ -63,7 +56,7 @@ def makeWebhookResult(req):
         sres = urllib.request.urlopen(zohourl).read()
         sstr = sres.decode("utf-8")
         sstr  = sstr[28:-1]
-        speech = json.dumps(json_thing, sort_keys=sort, indent=indents)
+        speech = json.dumps(sstr, indent=4, sort_keys=True)
         print("Response:")
         print(speech)
         return {
