@@ -57,8 +57,8 @@ def makeWebhookResult(req):
         sstr = sres.decode("utf-8")
         
         # handle XML
-        xml = xml.dom.minidom.parseString(sstr) 
-        sstr = xml.toprettyxml()
+        dxml = xml.dom.minidom.parseString(sstr) 
+        sstr = dxml.toprettyxml()
         
         # handle JSON
         # sstr  = sstr[28:-1]
