@@ -101,7 +101,11 @@ def analyze(text):
     sadness = list()
 
     watsonurl = 'https://watson-api-explorer.mybluemix.net/tone-analyzer/api/v3/tone?text=' + urllib.parse.quote_plus(text) + '&tones=emotion%2Clanguage%2Csocial&sentences=false&version=2016-02-11'
+    print (watsonurl)
     json_output = urllib.request.urlopen(watsonurl).read()
+    print (json_output)
+    sstr = json_output.decode("utf-8")
+    print (sstr)
     
     try:
         anger.append(json_output['document_tone']['tone_categories'][0]['tones'][0]['score'])
