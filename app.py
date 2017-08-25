@@ -97,15 +97,15 @@ def analyze(text, username, password):
 
     lsret = "Overview of average emotional levels (0 <= n <= 1) \n"
 
-    lsret = lsret + 'Anger: ' + str(sum(anger) / len(anger))) + '\n'
+    lsret = lsret + 'Anger: ' + str(sum(anger) / len(anger)) + '\n'
     lsret = lsret + ' '.join(anger) + '\n'
-    lsret = lsret + 'Fear: ' + str(sum(fear) / len(fear))) + '\n'
+    lsret = lsret + 'Fear: ' + str(sum(fear) / len(fear)) + '\n'
     lsret = lsret + ' '.join(fear) + '\n'
-    lsret = lsret + 'Disgust: ' + str(sum(disgust) / len(disgust))) + '\n'
+    lsret = lsret + 'Disgust: ' + str(sum(disgust) / len(disgust)) + '\n'
     lsret = lsret + ' '.join(disgust) + '\n'
-    lsret = lsret + 'Joy: ' + str(sum(joy) / len(joy))) + '\n'
+    lsret = lsret + 'Joy: ' + str(sum(joy) / len(joy)) + '\n'
     lsret = lsret + ' '.join(joy) + '\n'
-    lsret = lsret + 'Sadness: ' + str(sum(sadness) / len(sadness))) + '\n'
+    lsret = lsret + 'Sadness: ' + str(sum(sadness) / len(sadness)) + '\n'
     lsret = lsret + ' '.join(sadness) + '\n'
 
     print (lsret)
