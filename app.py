@@ -103,42 +103,11 @@ def analyze(text):
     watsonurl = 'https://watson-api-explorer.mybluemix.net/tone-analyzer/api/v3/tone?text=' + urllib.parse.quote_plus(text) + '&tones=emotion%2Clanguage%2Csocial&sentences=false&version=2016-02-11'
     print (watsonurl)
     json_output = urllib.request.urlopen(watsonurl).read()
+    print ('*** JSON OUTPUT ***')
     print (json_output)
     sstr = json_output.decode("utf-8")
     print (sstr)
-    
-    try:
-        anger.append(json_output['document_tone']['tone_categories'][0]['tones'][0]['score'])
-        fear.append(json_output['document_tone']['tone_categories'][0]['tones'][1]['score'])
-        disgust.append(json_output['document_tone']['tone_categories'][0]['tones'][2]['score'])
-        joy.append(json_output['document_tone']['tone_categories'][0]['tones'][3]['score'])
-        sadness.append(json_output['document_tone']['tone_categories'][0]['tones'][4]['score'])
-    except:
-        print ('Error when fetching score')
-
-    lsret = "Overview of average emotional levels (0 <= n <= 1) \n"
-
-    if len(anger) > 0:
-        lsret = lsret + 'Anger: ' + str(sum(anger) / len(anger)) + '\n'
-        lsret = lsret + ' '.join(anger) + '\n'
-       
-    if len(anger) > 0:
-        lsret = lsret + 'Fear: ' + str(sum(fear) / len(fear)) + '\n'
-        lsret = lsret + ' '.join(fear) + '\n'
-    
-    if len(fear) > 0:
-        lsret = lsret + 'Disgust: ' + str(sum(disgust) / len(disgust)) + '\n'
-        lsret = lsret + ' '.join(disgust) + '\n'
-    
-    if len(joy) > 0:
-        lsret = lsret + 'Joy: ' + str(sum(joy) / len(joy)) + '\n'
-        lsret = lsret + ' '.join(joy) + '\n'
-    
-    if len(sadness) > 0:
-        lsret = lsret + 'Sadness: ' + str(sum(sadness) / len(sadness)) + '\n'
-        lsret = lsret + ' '.join(sadness) + '\n'
-
-    print (lsret)
+    lsret = format_tone_json(sstr)
     return lsret
      
         
@@ -153,6 +122,7 @@ def format_tone_json(data):
         for j in i['tones']:
             lsret = lsret + j['tone_name'].ljust(20) + (str(round(j['score'] * 100,1)) + "%").rjust(10) + '\n'
     print(lsret)
+    return lsret
     
 
 if __name__ == '__main__':
