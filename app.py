@@ -46,7 +46,7 @@ def makeWebhookResult(req):
         "displayText": speech,
         #"data": {},
         # "contextOut": [],
-        "source": "apiai-onlinestore-shipping"
+        "source": "rajesh-apiai-onlinestore-shipping"
         }
     elif req.get("result").get("action") == "zoho.getloaninfo":
         print("Invoked zoho.getloaninfo")
@@ -75,19 +75,32 @@ def makeWebhookResult(req):
         "displayText": speech,
         #"data": {},
         # "contextOut": [],
-        "source": "zoho-creator-loaninfo"
+        "source": "rajesh-zoho-creator-loaninfo"
         }	
+    elif req.get("result").get("action") == "dobuddy.tonecheck":
+        print("Invoked zoho.getloaninfo")
+        result = req.get("result")
+        parameters = result.get("parameters")
+        tonetext = parameters.get("tonetext")    
+        speech = analyze(tonetext)
+        return {
+        "speech": speech,
+        "displayText": speech,
+        #"data": {},
+        # "contextOut": [],
+        "source": "rajesh-watson-tone-check"
+        }        
     else:
         return {}
 	
-def analyze(text, username, password):
+def analyze(text):
     anger = list()
     fear = list()
     disgust = list()
     joy = list()
     sadness = list()
     
-    json_output = analyze_single(text, username, password)
+    json_output = analyze_single(text, 'rajesh98g@gmail.com', 'Password55$')
     anger.append(json_output['document_tone']['tone_categories'][0]['tones'][0]['score'])
     fear.append(json_output['document_tone']['tone_categories'][0]['tones'][1]['score'])
     disgust.append(json_output['document_tone']['tone_categories'][0]['tones'][2]['score'])
