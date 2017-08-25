@@ -114,16 +114,25 @@ def analyze(text):
 
     lsret = "Overview of average emotional levels (0 <= n <= 1) \n"
 
-    lsret = lsret + 'Anger: ' + str(sum(anger) / len(anger)) + '\n'
-    lsret = lsret + ' '.join(anger) + '\n'
-    lsret = lsret + 'Fear: ' + str(sum(fear) / len(fear)) + '\n'
-    lsret = lsret + ' '.join(fear) + '\n'
-    lsret = lsret + 'Disgust: ' + str(sum(disgust) / len(disgust)) + '\n'
-    lsret = lsret + ' '.join(disgust) + '\n'
-    lsret = lsret + 'Joy: ' + str(sum(joy) / len(joy)) + '\n'
-    lsret = lsret + ' '.join(joy) + '\n'
-    lsret = lsret + 'Sadness: ' + str(sum(sadness) / len(sadness)) + '\n'
-    lsret = lsret + ' '.join(sadness) + '\n'
+    if len(anger) > 0:
+        lsret = lsret + 'Anger: ' + str(sum(anger) / len(anger)) + '\n'
+        lsret = lsret + ' '.join(anger) + '\n'
+       
+    if len(anger) > 0:
+        lsret = lsret + 'Fear: ' + str(sum(fear) / len(fear)) + '\n'
+        lsret = lsret + ' '.join(fear) + '\n'
+    
+    if len(fear) > 0:
+        lsret = lsret + 'Disgust: ' + str(sum(disgust) / len(disgust)) + '\n'
+        lsret = lsret + ' '.join(disgust) + '\n'
+    
+    if len(joy) > 0:
+        lsret = lsret + 'Joy: ' + str(sum(joy) / len(joy)) + '\n'
+        lsret = lsret + ' '.join(joy) + '\n'
+    
+    if len(sadness) > 0:
+        lsret = lsret + 'Sadness: ' + str(sum(sadness) / len(sadness)) + '\n'
+        lsret = lsret + ' '.join(sadness) + '\n'
 
     print (lsret)
     return lsret
