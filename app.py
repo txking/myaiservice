@@ -5,7 +5,6 @@ import json
 import os
 import urllib.request
 import xml.dom.minidom
-import requests
 import json
 
 from flask import Flask
