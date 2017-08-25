@@ -101,11 +101,16 @@ def analyze(text):
     sadness = list()
     
     json_output = analyze_single(text, 'rajesh98g@gmail.com', 'Password55$')
-    anger.append(json_output['document_tone']['tone_categories'][0]['tones'][0]['score'])
-    fear.append(json_output['document_tone']['tone_categories'][0]['tones'][1]['score'])
-    disgust.append(json_output['document_tone']['tone_categories'][0]['tones'][2]['score'])
-    joy.append(json_output['document_tone']['tone_categories'][0]['tones'][3]['score'])
-    sadness.append(json_output['document_tone']['tone_categories'][0]['tones'][4]['score'])
+    print (json_output)
+    
+    try:
+        anger.append(json_output['document_tone']['tone_categories'][0]['tones'][0]['score'])
+        fear.append(json_output['document_tone']['tone_categories'][0]['tones'][1]['score'])
+        disgust.append(json_output['document_tone']['tone_categories'][0]['tones'][2]['score'])
+        joy.append(json_output['document_tone']['tone_categories'][0]['tones'][3]['score'])
+        sadness.append(json_output['document_tone']['tone_categories'][0]['tones'][4]['score'])
+    except:
+        print ('Error when fetching score')
 
     lsret = "Overview of average emotional levels (0 <= n <= 1) \n"
 
@@ -129,6 +134,7 @@ def analyze_single(text, username, password):
     url = "https://gateway.watsonplatform.net/tone-analyzer-beta/api/v3/tone?version=2016-02-11&tones=emotion&sentences=false&text=" + urllib.parse.quote(text.encode('utf-8'))
     try:
         req = requests.get(url, auth=(username, password))
+        print (req)
     except:
         return '{Error calling Watson}'
     return req.json()
@@ -144,7 +150,8 @@ def format_tone_json(data):
         lsret = lsret + lshypens + '\n'
         for j in i['tones']:
             lsret = lsret + j['tone_name'].ljust(20) + (str(round(j['score'] * 100,1)) + "%").rjust(10) + '\n'
-        print(lsret)
+    print(lsret)
+    
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
