@@ -78,7 +78,7 @@ def makeWebhookResult(req):
         "source": "rajesh-zoho-creator-loaninfo"
         }	
     elif req.get("result").get("action") == "dobuddy.tonecheck":
-        print("Invoked zoho.getloaninfo")
+        print("Invoked dobuddy.tonecheck")
         result = req.get("result")
         parameters = result.get("parameters")
         tonetext = parameters.get("tonetext")    
@@ -99,9 +99,9 @@ def analyze(text):
     disgust = list()
     joy = list()
     sadness = list()
-    
-    json_output = analyze_single(text, 'rajesh98g@gmail.com', 'Password55$')
-    print (json_output)
+
+    watsonurl = 'https://watson-api-explorer.mybluemix.net/tone-analyzer/api/v3/tone?text=' + urllib.parse.quote_plus(text) + '&tones=emotion%2Clanguage%2Csocial&sentences=false&version=2016-02-11
+    json_output = urllib.request.urlopen(watsonurl).read()
     
     try:
         anger.append(json_output['document_tone']['tone_categories'][0]['tones'][0]['score'])
@@ -136,18 +136,7 @@ def analyze(text):
 
     print (lsret)
     return lsret
-
-
-# Returns the json for analysis of a single string of any length
-def analyze_single(text, username, password):
-    url = "https://gateway.watsonplatform.net/tone-analyzer-beta/api/v3/tone?version=2016-02-11&tones=emotion&sentences=false&text=" + urllib.parse.quote(text.encode('utf-8'))
-    try:
-        req = requests.get(url, auth=(username, password))
-        print (req)
-    except:
-        return '{Error calling Watson}'
-    return req.json()
-        
+     
         
 def format_tone_json(data):
     data = json.loads(str(data))
