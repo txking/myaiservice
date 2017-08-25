@@ -5,10 +5,13 @@ import json
 import os
 import urllib.request
 import xml.dom.minidom
+import requests
+import json
 
 from flask import Flask
 from flask import request
 from flask import make_response
+
 
 # Flask app should start in global layout
 app = Flask(__name__)
@@ -78,7 +81,58 @@ def makeWebhookResult(req):
     else:
         return {}
 	
+def analyze(text, username, password):
+    anger = list()
+    fear = list()
+    disgust = list()
+    joy = list()
+    sadness = list()
+    
+    json_output = analyze_single(text, username, password)
+    anger.append(json_output['document_tone']['tone_categories'][0]['tones'][0]['score'])
+    fear.append(json_output['document_tone']['tone_categories'][0]['tones'][1]['score'])
+    disgust.append(json_output['document_tone']['tone_categories'][0]['tones'][2]['score'])
+    joy.append(json_output['document_tone']['tone_categories'][0]['tones'][3]['score'])
+    sadness.append(json_output['document_tone']['tone_categories'][0]['tones'][4]['score'])
 
+    lsret = "Overview of average emotional levels (0 <= n <= 1) \n"
+
+    lsret = lsret + 'Anger: ' + str(sum(anger) / len(anger))) + '\n'
+    lsret = lsret + ' '.join(anger) + '\n'
+    lsret = lsret + 'Fear: ' + str(sum(fear) / len(fear))) + '\n'
+    lsret = lsret + ' '.join(fear) + '\n'
+    lsret = lsret + 'Disgust: ' + str(sum(disgust) / len(disgust))) + '\n'
+    lsret = lsret + ' '.join(disgust) + '\n'
+    lsret = lsret + 'Joy: ' + str(sum(joy) / len(joy))) + '\n'
+    lsret = lsret + ' '.join(joy) + '\n'
+    lsret = lsret + 'Sadness: ' + str(sum(sadness) / len(sadness))) + '\n'
+    lsret = lsret + ' '.join(sadness) + '\n'
+
+    print (lsret)
+    return lsret
+
+
+# Returns the json for analysis of a single string of any length
+def analyze_single(text, username, password):
+    url = "https://gateway.watsonplatform.net/tone-analyzer-beta/api/v3/tone?version=2016-02-11&tones=emotion&sentences=false&text=" + urllib.parse.quote(text.encode('utf-8'))
+    try:
+        req = requests.get(url, auth=(username, password))
+    except:
+        return '{Error calling Watson}'
+    return req.json()
+        
+        
+def format_tone_json(data):
+    data = json.loads(str(data))
+    print(data)
+    lsret = 'FNM Buddy Tone Analysis results : \n' 
+    for i in data['document_tone']['tone_categories']:
+        lsret = lsret + i['category_name'] + '\n'
+        lshypens = "-" * len(i['category_name'])
+        lsret = lsret + lshypens + '\n'
+        for j in i['tones']:
+            lsret = lsret + j['tone_name'].ljust(20) + (str(round(j['score'] * 100,1)) + "%").rjust(10) + '\n'
+        print(lsret)
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
