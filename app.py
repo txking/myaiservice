@@ -158,7 +158,7 @@ def googlesearch(stext):
 
 def googlesearchurl(stext):
     print ("GGGGGGGGGG  Will GOOGLE search  GGGGGGGGGGGGGG")
-    gurl = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyAIxk6eBuIuSXotmMN2qabwAy5NoLYnk8Y' + '&cx=002730420427000960612:0as1dxnsjnq&q=' + stext + '&num=2'
+    gurl = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyAIxk6eBuIuSXotmMN2qabwAy5NoLYnk8Y' + '&cx=002730420427000960612:0as1dxnsjnq&q=' + urllib.parse.quote_plus(stext) + '&num=2'
 
     json_output = urllib.request.urlopen(gurl).read()
     sstr = json_output.decode("utf-8")
