@@ -125,7 +125,7 @@ def makeWebhookResult(req):
         searchtext = parameters.get("searchtext")    
         speech = googlesearch(searchtext)
         return {
-        "speech": speech,
+        "speech": 'see the display text',
         "displayText": speech,
         "data": speech,
         # "contextOut": [],
@@ -140,7 +140,7 @@ def googlesearch(stext):
     service = build("customsearch", "v1",developerKey="AIzaSyAIxk6eBuIuSXotmMN2qabwAy5NoLYnk8Y")
     res = service.cse().list(q=stext,cx='002730420427000960612:0as1dxnsjnq',).execute()
 	# pprint.pprint(res)
-    print (res)
+    # print (res)
     return res
 
 
