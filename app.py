@@ -103,7 +103,7 @@ def makeWebhookResult(req):
         "displayText": speech,
         #"data": {},
         # "contextOut": [],
-        "source": "rajesh-zoho-creator-loaninfo"
+        "source": "rajesh-zoho-creator-loaninfojson"
         }		
     elif req.get("result").get("action") == "dobuddy.tonecheck":
         print("Invoked dobuddy.tonecheck")
@@ -137,14 +137,9 @@ def makeWebhookResult(req):
 
 def googlesearch(stext):
     print ("GGGGGGGGGG  Will GOOGLE search  GGGGGGGGGGGGGG")
-	print (stext)
-	service = build("customsearch", "v1",developerKey="AIzaSyAIxk6eBuIuSXotmMN2qabwAy5NoLYnk8Y")
-	res = service.cse().list(
-      q='MORA',
-      cx='002730420427000960612:0as1dxnsjnq',
-    ).execute()
     pprint.pprint(res)
     return res
+
 
 		
 def analyze(text):
