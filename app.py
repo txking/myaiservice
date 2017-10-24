@@ -130,7 +130,20 @@ def makeWebhookResult(req):
         "data": speech,
         # "contextOut": [],
         "source": "rajesh-fnmsite-search"
-        }        
+        }
+    elif req.get("result").get("action") == "custom.searchnowurl":
+        print("Invoked custom.searchnow")
+        result = req.get("result")
+        parameters = result.get("parameters")
+        searchtext = parameters.get("searchtext")    
+        speech = googlesearchurl(searchtext)
+        return {
+        "speech": speech,
+        "displayText": speech,
+        # "data": speech,
+        # "contextOut": [],
+        "source": "rajesh-fnmsite-search"
+        }            
     else:
         return {}
 
@@ -153,7 +166,6 @@ def googlesearchurl(stext):
     res = format_search_json(sstr)
     # pprint.pprint(res)
     print (res)
-
     return res
 
 	
