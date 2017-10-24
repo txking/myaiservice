@@ -138,11 +138,9 @@ def makeWebhookResult(req):
 def googlesearch(stext):
     print ("GGGGGGGGGG  Will GOOGLE search  GGGGGGGGGGGGGG")
     service = build("customsearch", "v1",developerKey="AIzaSyAIxk6eBuIuSXotmMN2qabwAy5NoLYnk8Y")
-
     res = service.cse().list(q=stext,cx='002730420427000960612:0as1dxnsjnq',).execute()
-	
-	print (res)
-    # pprint.pprint(res)
+	# pprint.pprint(res)
+    print (res)
     return res
 
 
