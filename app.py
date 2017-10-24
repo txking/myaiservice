@@ -143,6 +143,32 @@ def googlesearch(stext):
     # print (res)
     return res
 
+def googlesearchurl(stext):
+    print ("GGGGGGGGGG  Will GOOGLE search  GGGGGGGGGGGGGG")
+    gurl = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyAIxk6eBuIuSXotmMN2qabwAy5NoLYnk8Y' + '&cx=002730420427000960612:0as1dxnsjnq&q=' + stext + '&num=2'
+
+    json_output = urllib.request.urlopen(gurl).read()
+    sstr = json_output.decode("utf-8")
+
+    res = format_search_json(sstr)
+    # pprint.pprint(res)
+    print (res)
+
+    return res
+
+	
+
+def format_search_json(data):
+    data = json.loads(str(data))
+    print(data)
+    lsret = 'FNM Search results : \n' 
+    for i in data['items']:
+        lsret = lsret + 'Title = ' + i['title'] + '\n'
+        lsret = lsret + 'Snippet = ' + i['snippet'] + '\n'
+        lsret = lsret + 'Link = ' + i['link'] + '\n'
+    print(lsret)
+    return lsret
+
 
 		
 def analyze(text):
@@ -175,7 +201,7 @@ def format_tone_json(data):
             lsret = lsret + j['tone_name'].ljust(20) + (str(round(j['score'] * 100,1)) + "%").rjust(10) + '\n'
     print(lsret)
     return lsret
-
+	
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
