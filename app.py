@@ -127,7 +127,7 @@ def makeWebhookResult(req):
         return {
         "speech": speech,
         "displayText": speech,
-        #"data": {},
+        "data": speech,
         # "contextOut": [],
         "source": "rajesh-fnmsite-search"
         }        
@@ -139,9 +139,10 @@ def googlesearch(stext):
     print ("GGGGGGGGGG  Will GOOGLE search  GGGGGGGGGGGGGG")
     service = build("customsearch", "v1",developerKey="AIzaSyAIxk6eBuIuSXotmMN2qabwAy5NoLYnk8Y")
 
-    res = service.cse().list(q='MORA',cx='002730420427000960612:0as1dxnsjnq',).execute()
+    res = service.cse().list(q=stext,cx='002730420427000960612:0as1dxnsjnq',).execute()
 	
-    pprint.pprint(res)
+	print res
+    # pprint.pprint(res)
     return res
 
 
