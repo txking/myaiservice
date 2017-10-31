@@ -135,8 +135,9 @@ def makeWebhookResult(req):
         print("Invoked custom.searchnow")
         result = req.get("result")
         parameters = result.get("parameters")
-        searchtext = parameters.get("searchtext")    
-        speech = googlesearchurl(searchtext)
+        searchtext = parameters.get("searchtext")
+        numresults = parameters.get("numresults")       
+        speech = googlesearchurl(searchtext,numresults)
         return {
         "speech": speech,
         "displayText": speech,
@@ -148,14 +149,22 @@ def makeWebhookResult(req):
         return {}
 
 
-def googlesearchurl(stext):
+def googlesearch(stext):
+    print ("GGGGGGGGGG  Will GOOGLE search  GGGGGGGGGGGGGG")
+    service = build("customsearch", "v1",developerKey="AIzaSyAIxk6eBuIuSXotmMN2qabwAy5NoLYnk8Y")
+    res = service.cse().list(q=stext,cx='002730420427000960612:0as1dxnsjnq',).execute()
+	# pprint.pprint(res)
+    # print (res)
+    return res
+
+def googlesearchurl(stext,ncnt):
     print ("GGGGGGGGGG  Will GOOGLE search  GGGGGGGGGGGGGG")
     gurl = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyAIxk6eBuIuSXotmMN2qabwAy5NoLYnk8Y' + '&cx=002730420427000960612:0as1dxnsjnq&q=' + urllib.parse.quote_plus(stext) + '&num=4'
 
     json_output = urllib.request.urlopen(gurl).read()
     sstr = json_output.decode("utf-8")
 
-    res = format_search_json(sstr)
+    res = format_search_json(sstr,ncnt)
     # pprint.pprint(res)
     print (res)
     return res
@@ -168,25 +177,12 @@ def format_search_json(data):
     ctr = 1
     lsret = 'FNM Search results : \n' 
     for i in data['items']:
-        lsret = lsret + 'Result ' + ctr + '\n'  
-        lsret = lsret + 'Title = ' + i['title'] + '\n'
-        lsret = lsret + 'Snippet = ' + i['snippet'] + '\n'
-        lsret = lsret + 'Link = ' + i['link'] + '\n'
-        ctr = ctr + 1
-    print(lsret)
-    return lsret
-
-
-	
-
-def format_search_json(data):
-    data = json.loads(str(data))
-    print(data)
-    lsret = 'FNM Search results : \n' 
-    for i in data['items']:
-        lsret = lsret + 'Title = ' + i['title'] + '\n'
-        lsret = lsret + 'Snippet = ' + i['snippet'] + '\n'
-        lsret = lsret + 'Link = ' + i['link'] + '\n'
+        if ctr <= ncnt
+            lsret = lsret + 'Result ' + ctr + '\n'  
+            lsret = lsret + 'Title = ' + i['title'] + '\n'
+            lsret = lsret + 'Snippet = ' + i['snippet'] + '\n'
+            lsret = lsret + 'Link = ' + i['link'] + '\n'
+            ctr = ctr + 1
     print(lsret)
     return lsret
 
@@ -228,3 +224,4 @@ if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
     #print "Starting app on port %d" % port
     app.run(debug=True, port=port, host='0.0.0.0')
+
