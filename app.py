@@ -148,17 +148,9 @@ def makeWebhookResult(req):
         return {}
 
 
-def googlesearch(stext):
-    print ("GGGGGGGGGG  Will GOOGLE search  GGGGGGGGGGGGGG")
-    service = build("customsearch", "v1",developerKey="AIzaSyAIxk6eBuIuSXotmMN2qabwAy5NoLYnk8Y")
-    res = service.cse().list(q=stext,cx='002730420427000960612:0as1dxnsjnq',).execute()
-	# pprint.pprint(res)
-    # print (res)
-    return res
-
 def googlesearchurl(stext):
     print ("GGGGGGGGGG  Will GOOGLE search  GGGGGGGGGGGGGG")
-    gurl = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyDisM31LQhMDrhkjnoSk17wpB54T_Wf17U' + '&cx=002730420427000960612:0as1dxnsjnq&q=' + urllib.parse.quote_plus(stext) + '&num=2'
+    gurl = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyAIxk6eBuIuSXotmMN2qabwAy5NoLYnk8Y' + '&cx=002730420427000960612:0as1dxnsjnq&q=' + urllib.parse.quote_plus(stext) + '&num=4'
 
     json_output = urllib.request.urlopen(gurl).read()
     sstr = json_output.decode("utf-8")
@@ -167,6 +159,23 @@ def googlesearchurl(stext):
     # pprint.pprint(res)
     print (res)
     return res
+
+	
+
+def format_search_json(data):
+    data = json.loads(str(data))
+    print(data)
+    ctr = 1
+    lsret = 'FNM Search results : \n' 
+    for i in data['items']:
+        lsret = lsret + 'Result ' + ctr + '\n'  
+        lsret = lsret + 'Title = ' + i['title'] + '\n'
+        lsret = lsret + 'Snippet = ' + i['snippet'] + '\n'
+        lsret = lsret + 'Link = ' + i['link'] + '\n'
+        ctr = ctr + 1
+    print(lsret)
+    return lsret
+
 
 	
 
