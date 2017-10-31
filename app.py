@@ -178,7 +178,7 @@ def format_search_json(data,ncnt):
     ncnt = ncnt + 0
     lsret = 'FNM Search results : \n' 
     for i in data['items']:
-        if  ctr <= ncnt 
+        if  ctr <= ncnt: 
             lsret = lsret + 'Result ' + ctr + '\n'  
             lsret = lsret + 'Title = ' + i['title'] + '\n'
             lsret = lsret + 'Snippet = ' + i['snippet'] + '\n'
