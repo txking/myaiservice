@@ -159,31 +159,28 @@ def googlesearch(stext):
 
 def googlesearchurl(stext,ncnt):
     print ("GGGGGGGGGG  Will GOOGLE search  GGGGGGGGGGGGGG")
-    gurl = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyAIxk6eBuIuSXotmMN2qabwAy5NoLYnk8Y' + '&cx=002730420427000960612:0as1dxnsjnq&q=' + urllib.parse.quote_plus(stext) + '&num=4'
+    gurl = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyAIxk6eBuIuSXotmMN2qabwAy5NoLYnk8Y' + '&cx=002730420427000960612:0as1dxnsjnq&q=' + urllib.parse.quote_plus(stext) + '&num=' + ncnt
 
     json_output = urllib.request.urlopen(gurl).read()
     sstr = json_output.decode("utf-8")
 
-    res = format_search_json(sstr,ncnt)
+    res = format_search_json(sstr)
     # pprint.pprint(res)
     print (res)
     return res
-
 	
 
-def format_search_json(data,ncnt):
+def format_search_json(data):
     data = json.loads(str(data))
     print(data)
     ctr = 1
-    ncnt = ncnt + 0
     lsret = 'FNM Search results : \n' 
     for i in data['items']:
-        if  ctr <= ncnt: 
-            lsret = lsret + 'Result ' + ctr + '\n'  
-            lsret = lsret + 'Title = ' + i['title'] + '\n'
-            lsret = lsret + 'Snippet = ' + i['snippet'] + '\n'
-            lsret = lsret + 'Link = ' + i['link'] + '\n'
-            ctr = ctr + 1
+        lsret = lsret + 'Result ' + ctr + '\n'  
+        lsret = lsret + 'Title = ' + i['title'] + '\n'
+        lsret = lsret + 'Snippet = ' + i['snippet'] + '\n'
+        lsret = lsret + 'Link = ' + i['link'] + '\n'
+        ctr = ctr + 1
     print(lsret)
     return lsret
 
