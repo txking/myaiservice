@@ -176,7 +176,7 @@ def format_search_json(data):
     ctr = 1
     lsret = 'FNM Search results : \n' 
     for i in data['items']:
-        lsret = lsret + 'Result ' + ctr + '\n'  
+        lsret = lsret + 'Result ' + str(ctr) + '\n'  
         lsret = lsret + 'Title = ' + i['title'] + '\n'
         lsret = lsret + 'Snippet = ' + i['snippet'] + '\n'
         lsret = lsret + 'Link = ' + i['link'] + '\n'
